@@ -1,0 +1,45 @@
+
+#drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 20px;
+    width: 480px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+#drop-area.highlight {
+    border-color: purple;
+}
+
+.drop-form {
+    margin-bottom: 10px;
+}
+
+.drop-form-text {
+    opacity: 0.5;
+}
+.failure {
+    color: #cc2f2e;
+}
+.button {
+    display: inline-block;
+    padding: 10px;
+    background: #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 10em;
+    height: 1em;
+}
+
+.button:hover {
+    background: #ddd;
+}
+
+#fileElem {
+    display: none;
+}
+
+#progress-bar {
+    width: 480px;
+}

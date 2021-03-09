@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<script type=text/javascript src="{{url_for('static', filename='js/plugins/jquery.js') }}"></script>
+<script type=text/javascript src="{{url_for('static', filename='js/staticjs.js') }}"></script>
+<style>
+    .black-star {
+        opacity: 0.2;
+    }
+
+    th:nth-child(2),
+    th:nth-child(6),
+    th:nth-child(14),
+    td:nth-child(2),
+    td:nth-child(6),
+    td:nth-child(14),
+    .left-border {
+        border-left: solid 4px black;
+    }
+
+    .big-left {
+        padding-left: 7.5px;
+        padding-right: 7.5px;
+        /* background-color: red; */
+        border-left: solid 8px rgba(0,0,0,1);
+    }
+</style>
+{% endblock %}
+
+{% block back_to_page %}
+<h1><a href="{{ url_for('index') }}">Generic Website</a></h1>
+{% endblock %}
+
+
+
+{% block content %}
+<form>
+<div>
+    <label for="tags">Tags</label><input id="tags" type="text">
+</div>
+</form>
+<div class="player-table">
+    <table border=“6px” bordercolor=“#000000”>
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th colspan=4># Attacks</th>
+                <th colspan=4 class="left-border"># Defenses</th>
+                <th colspan=4 class="left-border big-left">% Attacks</th>
+                <th colspan=4 class="left-border">% Defenses</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th><span class="black-star">★★★</span></th>
+                <th>⭐<span class="black-star">★★</span></th>
+                <th>⭐⭐<span class="black-star">★</span></th>
+                <th>⭐⭐⭐</th>
+
+                <th><span class="black-star">★★★</span></th>
+                <th>⭐<span class="black-star">★★</span></th>
+                <th>⭐⭐<span class="black-star">★</span></th>
+                <th>⭐⭐⭐</th>
+
+                <th class="big-left"><span class="black-star">★★★</span></th>
+                <th>⭐<span class="black-star">★★</span></th>
+                <th>⭐⭐<span class="black-star">★</span></th>
+                <th>⭐⭐⭐</th>
+
+                <th><span class="black-star">★★★</span></th>
+                <th>⭐<span class="black-star">★★</span></th>
+                <th>⭐⭐<span class="black-star">★</span></th>
+                <th>⭐⭐⭐</th>
+            </tr>
+        </thead>
+        {% for p in players %}
+        <tr>
+            <td>{{ p["name"] }}</td>
+            <td>{{ p["a_0"] }}</td>
+            <td>{{ p["a_1"] }}</td>
+            <td>{{ p["a_2"] }}</td>
+            <td>{{ p["a_3"] }}</td>
+            <td>{{ p["d_0"] }}</td>
+            <td>{{ p["d_1"] }}</td>
+            <td>{{ p["d_2"] }}</td>
+            <td>{{ p["d_3"] }}</td>
+
+            <td class="big-left">{{ p["pa_0"] }}&#37;</td>
+            <td>{{ p["pa_1"] }}&#37;</td>
+            <td>{{ p["pa_2"] }}&#37;</td>
+            <td>{{ p["pa_3"] }}&#37;</td>
+            <td>{{ p["pd_0"] }}&#37;</td>
+            <td>{{ p["pd_1"] }}&#37;</td>
+            <td>{{ p["pd_2"] }}&#37;</td>
+            <td>{{ p["pd_3"] }}&#37;</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

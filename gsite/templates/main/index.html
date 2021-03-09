@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<script type=text/javascript src="{{url_for('static', filename='js/plugins/jquery.js') }}"></script>
+<script type=text/javascript src="{{url_for('static', filename='js/staticjs.js') }}"></script>
+{% endblock %}
+
+{% block back_to_page %}
+<h1><a href="{{ url_for('index') }}">Generic Website</a></h1>
+{% endblock %}
+
+
+{% block content %}
+<p>
+    <img src="data:image/png;base64,{{ plot1 }}">
+</p>
+<p>
+    <img src="data:image/png;base64,{{ plot2 }}">
+</p>
+
+{% endblock %}

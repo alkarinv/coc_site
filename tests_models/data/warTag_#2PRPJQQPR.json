@@ -1,0 +1,248 @@
+{
+    "state": "preparation",
+    "teamSize": 15,
+    "preparationStartTime": "20200801T204034.000Z",
+    "startTime": "20200802T204032.000Z",
+    "endTime": "20200803T204032.000Z",
+    "clan": {
+      "tag": "#99VP2JVV",
+      "name": "Itzamna",
+      "badgeUrls": {
+        "small": "https://api-assets.clashofclans.com/badges/70/X7vXMV9qzfKNSGBJ7c8iZTniivEEkHHD0VuWSA-qXzU.png",
+        "large": "https://api-assets.clashofclans.com/badges/512/X7vXMV9qzfKNSGBJ7c8iZTniivEEkHHD0VuWSA-qXzU.png",
+        "medium": "https://api-assets.clashofclans.com/badges/200/X7vXMV9qzfKNSGBJ7c8iZTniivEEkHHD0VuWSA-qXzU.png"
+      },
+      "clanLevel": 17,
+      "attacks": 0,
+      "stars": 0,
+      "destructionPercentage": 0,
+      "members": [
+        {
+          "tag": "#PG0GGPUG",
+          "name": "rooftops",
+          "townhallLevel": 13,
+          "mapPosition": 10,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#YUL9G90G",
+          "name": "Roger",
+          "townhallLevel": 13,
+          "mapPosition": 4,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#2C029YV9",
+          "name": "wiellos",
+          "townhallLevel": 13,
+          "mapPosition": 1,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#Q8CUGLYQ",
+          "name": "pigeon76",
+          "townhallLevel": 13,
+          "mapPosition": 17,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#PVUCY8GL",
+          "name": "Craft",
+          "townhallLevel": 13,
+          "mapPosition": 14,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#2Y8JUVVP8",
+          "name": "Daveke",
+          "townhallLevel": 13,
+          "mapPosition": 6,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#GP982PR8",
+          "name": "Michael",
+          "townhallLevel": 13,
+          "mapPosition": 18,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#8JLR0YYPY",
+          "name": "HellBoy",
+          "townhallLevel": 13,
+          "mapPosition": 9,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#2Y928P8L",
+          "name": "Zenuwgas",
+          "townhallLevel": 13,
+          "mapPosition": 2,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#JGPYG2VG",
+          "name": "LuctorEtEmergo",
+          "townhallLevel": 13,
+          "mapPosition": 8,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#RYCY02CU",
+          "name": "pieter",
+          "townhallLevel": 13,
+          "mapPosition": 3,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#2PGJ92RJL",
+          "name": "johan",
+          "townhallLevel": 13,
+          "mapPosition": 15,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#20G9JV80G",
+          "name": "Winkelmeule",
+          "townhallLevel": 13,
+          "mapPosition": 19,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#P9J22R8G",
+          "name": "UNCLE 3POINTX",
+          "townhallLevel": 13,
+          "mapPosition": 7,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#2VQ80YPU8",
+          "name": "Trinity",
+          "townhallLevel": 13,
+          "mapPosition": 11,
+          "opponentAttacks": 0
+        }
+      ]
+    },
+    "opponent": {
+      "tag": "#2PV8RPPJY",
+      "name": "Salatine kolbeh",
+      "badgeUrls": {
+        "small": "https://api-assets.clashofclans.com/badges/70/4-OGQVp1wd6YaKIQkgrphcjsqmw5CaHQohpoCJwQBdc.png",
+        "large": "https://api-assets.clashofclans.com/badges/512/4-OGQVp1wd6YaKIQkgrphcjsqmw5CaHQohpoCJwQBdc.png",
+        "medium": "https://api-assets.clashofclans.com/badges/200/4-OGQVp1wd6YaKIQkgrphcjsqmw5CaHQohpoCJwQBdc.png"
+      },
+      "clanLevel": 2,
+      "attacks": 0,
+      "stars": 0,
+      "destructionPercentage": 0,
+      "members": [
+        {
+          "tag": "#288209RC2",
+          "name": "MR.SAMAN",
+          "townhallLevel": 13,
+          "mapPosition": 9,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#2JRPYCR99",
+          "name": "F♠O♥A♣D♦",
+          "townhallLevel": 13,
+          "mapPosition": 14,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#QP9Q2QQY",
+          "name": "Hell Boy",
+          "townhallLevel": 13,
+          "mapPosition": 16,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#JPQRQU92",
+          "name": "kambiz",
+          "townhallLevel": 13,
+          "mapPosition": 1,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#CG0GRPRV",
+          "name": "THE WITCHER",
+          "townhallLevel": 13,
+          "mapPosition": 7,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#9QGR2CQQ8",
+          "name": "A_Kvh",
+          "townhallLevel": 13,
+          "mapPosition": 5,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#CL9RC009",
+          "name": "hosein.renjer",
+          "townhallLevel": 13,
+          "mapPosition": 4,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#2V808U02",
+          "name": "S.golriz",
+          "townhallLevel": 13,
+          "mapPosition": 3,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#PUP2RG08",
+          "name": "revenant",
+          "townhallLevel": 13,
+          "mapPosition": 6,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#UJULUCVU",
+          "name": "TERMINATOR",
+          "townhallLevel": 13,
+          "mapPosition": 10,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#208UYJCYY",
+          "name": "فرهاد",
+          "townhallLevel": 13,
+          "mapPosition": 17,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#2PUPLPYCR",
+          "name": "mamali",
+          "townhallLevel": 13,
+          "mapPosition": 11,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#PQJQRQR0",
+          "name": "↪F➡️U↔️R⬅️Y↩",
+          "townhallLevel": 13,
+          "mapPosition": 12,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#C0CU9LCU",
+          "name": "فاطمه",
+          "townhallLevel": 13,
+          "mapPosition": 2,
+          "opponentAttacks": 0
+        },
+        {
+          "tag": "#9L2P2RCP",
+          "name": "mohandes",
+          "townhallLevel": 13,
+          "mapPosition": 8,
+          "opponentAttacks": 0
+        }
+      ]
+    },
+    "warStartTime": "20200802T204032.000Z"
+  }

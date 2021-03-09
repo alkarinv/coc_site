@@ -1,0 +1,24 @@
+
+digraph {
+	label = "Model"
+	splines ="ortho"
+	league -> league_group -> league_round
+    league_group -> league_clan
+    league_clan -> league_player
+	league_round -> war
+	war -> war_clan -> war_player
+	war_player -> war_attack
+    edge [class=one2many]
+	League -> League_Group
+    League_Group -> League_Clan
+    League_Clan -> League_Player
+    League_Group -> League_Round
+    League_Round -> War_Tag -> War
+    War -> War_Clan
+    edge [arrowhead=none, arrowtail=none, dir=both]
+
+    War_Clan -> War_Player
+    War -> War_Attack
+
+}
+
