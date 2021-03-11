@@ -8,16 +8,17 @@ import sys
 import time
 import traceback
 from multiprocessing import Pool, cpu_count
-from models.utils import fmt_tag
+
 import pandas as pd
 import tabulate
+
+from models.utils import fmt_tag
 
 if os.path.exists(".env"):
     import dotenv
 
     dotenv.load_dotenv(".env", override=True)
 import models.req as req
-
 from models.req import COCRequest
 from models.utils import env_istrue
 

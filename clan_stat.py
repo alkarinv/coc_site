@@ -1,7 +1,7 @@
 import argparse
 import math
-import re
 import os
+import re
 import sys
 
 import pandas as pd
