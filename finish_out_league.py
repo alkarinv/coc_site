@@ -46,17 +46,15 @@ def run(auth_token, start=0, end=None, suffix="", get_wars=False, get_war_logs=F
     import models.req as req
     req.OFFLINE = OFFLINE
     db.init_db()
-    # clans = ["#8ULL0ULU", "#2R9LQRLY", "#8QJY9V8P"]
-    clans = []
     from models.model_controler import ModelControler
 
     mc = ModelControler()
 
     from models.models import LeagueSeason, WarLeague
-    season = LeagueSeason.get_season("2021-02")
+    season = LeagueSeason.get_season("2021-03")
     print(season)
     groups = season.groups[start:] if not end else season.groups[start:end]
-    print("len=", len(groups))
+    print("ngroups=", len(groups))
     # print(groups[0], season.season, type(season.season))
     # sys.exit(1)
     # print("clan", clans)
@@ -67,8 +65,8 @@ def run(auth_token, start=0, end=None, suffix="", get_wars=False, get_war_logs=F
                 print(" ", group, count, "#")
                 continue
             mc.get_league_group(group.clans[0].tag, season=season.season, get_wars=get_wars, save_to_db=True)
-            for c in group.clans:
-                mc.get_war_log(c.tag, save_to_db=True)
+            # for c in group.clans:
+            #     mc.get_war_log(c.tag, save_to_db=True)
             # found.update({c.tag:1 for c in lg.clans})
             completed += 1
             print(" ", count, completed," %")
@@ -96,9 +94,6 @@ if __name__ == "__main__":
     if os.path.exists(args.env_file):
         import dotenv
         dotenv.load_dotenv(args.env_file, override=True)
-    # populate_clans()
-    # league_counts = collections.defaultdict(int)
-    # args.start = 0
     print(f"runnning, auth-token={args.auth_token}")
     try:
         run(args.auth_token, start = args.start, end= args.end, suffix=args.suffix, get_wars=args.get_wars)

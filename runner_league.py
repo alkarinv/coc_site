@@ -14,6 +14,7 @@ import tabulate
 
 if os.path.exists(".env"):
     import dotenv
+
     dotenv.load_dotenv(".env", override=True)
 import models.req as req
 
@@ -50,6 +51,7 @@ if os.path.exists("error_clans.txt"):
         for l in f.readlines():
             error_clans[l.strip()] = 1
 
+
 def find_league(clan_tags):
     global clan_leagues
     ls = 0
@@ -82,13 +84,18 @@ def populate_clans():
             of.write(f"{t}\n")
         for t, n in pclans.items():
             of.write(f"{t}\n")
+
+
 t = Timer()
+
 
 def finish(auth_token, start, suffix="", league_counts={}):
     from models.model_controler import ModelControler
     from models.models import WarTag
+
     mc = ModelControler()
     # WarTag._get_unattached_war_tags()
+
 
 def append_clans(filename, clans):
     with open(filename) as inf:
@@ -96,20 +103,20 @@ def append_clans(filename, clans):
             vals = line.strip().split(",")
             clans.append(fmt_tag(vals[0]))
 
+
 def run(auth_token, start, end, suffix="", league_counts={}):
     global jcount
     import time
+
     st = time.time()
     cpus = cpu_count()
     print("my cpus", cpus)
     import models.db as db
     import models.req as req
+
     req.OFFLINE = OFFLINE
     db.init_db()
     clans = ["#8ULL0ULU", "#2R9LQRLY", "#8QJY9V8P"]
-    # clans = [ "#2R9LQRLY"]
-    # clans = ["#8ULL0ULU"]
-    # clans = []
 
     if env_istrue("USE_CLAN_FILE"):
         append_clans("clans_champs3plus_2021_02.csv")
@@ -118,6 +125,7 @@ def run(auth_token, start, end, suffix="", league_counts={}):
 
     print("nclans = ", len(clans))
     from models.utils import chunks
+
     list_clans = chunks(clans, 20)
 
     cpus = 10
@@ -125,6 +133,7 @@ def run(auth_token, start, end, suffix="", league_counts={}):
 
     # if driver.is_sqlite():
     from models.model_controler import ModelControler
+
     mc = ModelControler()
 
     for i, c in enumerate(clans):
@@ -136,10 +145,14 @@ def run(auth_token, start, end, suffix="", league_counts={}):
             raise
 
     print("done", time.time() - st, req.req_counter.value)
+
+
 completed = 0
+
 
 def should_skip(league, counts):
     from models.models import WarLeague
+
     if counts[league] > 100 and league < WarLeague.master1:
         return True
     if counts[league] > 200 and league <= WarLeague.master1:
@@ -147,6 +160,7 @@ def should_skip(league, counts):
     if counts[league] > 1000 and league <= WarLeague.champ3:
         return True
     return False
+
 
 def update_league(clans, j, start, suffix="", league_counts={}, mc=None):
     from models.models import WarLeague
@@ -159,6 +173,7 @@ def update_league(clans, j, start, suffix="", league_counts={}, mc=None):
     print("clans", clans)
     if not mc:
         from models.model_controler import ModelControler
+
         mc = ModelControler()
     for count, ctag in enumerate(clans):
         try:
@@ -168,7 +183,7 @@ def update_league(clans, j, start, suffix="", league_counts={}, mc=None):
                 continue
             clan = mc.dbcont.get_clan(ctag)
             if clan:
-                cl =  clan.get_current_league()
+                cl = clan.get_current_league()
                 if cl and should_skip(cl, league_counts):
                     print(f"db skipping {ctag},{cl}, count={league_counts[cl]}")
                     continue
@@ -181,8 +196,20 @@ def update_league(clans, j, start, suffix="", league_counts={}, mc=None):
                     of.write(f"{ctag},{clan.war_league}\n")
                 continue
             league_counts[clan.war_league] += 1
-            lg = mc.get_league_group(ctag, get_war_log=False, save_to_db=True, get_wars=False)
-            print(completed, clan.war_league, "  lg", lg.id if lg else "none", t.ellapsed(), type(clan.war_league))
+            lg = mc.get_league_group(
+                ctag,
+                get_war_log=env_istrue("LR_GET_WAR_LOG", False),
+                save_to_db=True,
+                get_wars=env_istrue("LR_GET_WARS", True),
+            )
+            print(
+                completed,
+                clan.war_league,
+                "  lg",
+                lg.id if lg else "none",
+                t.ellapsed(),
+                type(clan.war_league),
+            )
             if not lg:
                 continue
             completed += 1
@@ -192,39 +219,53 @@ def update_league(clans, j, start, suffix="", league_counts={}, mc=None):
             traceback.print_exc()
             continue
 
+
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(description='Run League.')
-    ap.add_argument('--auth-token', default=None)
-    ap.add_argument('--env-file', default=None)
-    ap.add_argument('--suffix', default="")
-    ap.add_argument('--start',type=int, default=0)
-    ap.add_argument('--end',type=int, default=None)
+    ap = argparse.ArgumentParser(description="Run League.")
+    ap.add_argument("--auth-token", default=None)
+    ap.add_argument("--env-file", default=None)
+    ap.add_argument("--suffix", default="")
+    ap.add_argument("--start", type=int, default=0)
+    ap.add_argument("--end", type=int, default=None)
+    ap.add_argument("--ip", default=None)
+
     args = ap.parse_args()
     if not args.env_file:
         args.env_file = os.path.join(os.path.dirname(__file__), ".env")
-
+    if args.ip:
+        import models.req as rr
+        rr._default_ip_ = args.ip
+    counts_file = f"counts{args.suffix}.txt"
+    starts_file = f"start{args.suffix}.txt"
 
     if os.path.exists(args.env_file):
         import dotenv
+
         dotenv.load_dotenv(args.env_file, override=True)
 
     if args.start is None:
-        if os.path.exists(f"start{args.suffix}.txt"):
-            with open(f"start{args.suffix}.txt") as f:
+        if os.path.exists(starts_file):
+            with open(starts_file) as f:
                 for line in f.readlines():
                     args.start = int(line.strip())
                     break
 
     league_counts = collections.defaultdict(int)
-    if os.path.exists(f"counts{args.suffix}.txt"):
-        with open(f"counts{args.suffix}.txt") as f:
+    if os.path.exists(counts_file):
+        with open(counts_file) as f:
             for line in f.readlines():
-                vals = line.strip().split(',')
+                vals = line.strip().split(",")
                 league_counts[int(vals[0].strip())] = int(vals[1])
     print(f"runnning, auth-token={args.auth_token}")
     try:
         try:
-            run(args.auth_token, start = args.start, end= args.end, suffix=args.suffix, league_counts=league_counts)
+            run(
+                args.auth_token,
+                start=args.start,
+                end=args.end,
+                suffix=args.suffix,
+                league_counts=league_counts
+            )
         except KeyboardInterrupt:
             # break
             pass
@@ -233,11 +274,12 @@ if __name__ == "__main__":
             raise
 
     finally:
-        with open(f"counts{args.suffix}.txt", "w") as f:
-            for k,v in league_counts.items():
-                print(k,v)
+        with open(counts_file, "w") as f:
+            for k, v in league_counts.items():
+                print(k, v)
                 f.write(f"{k},{v}\n")
-        with open(f"start{args.suffix}.txt", "w") as f:
+        with open(starts_file, "w") as f:
             f.write(f"{args.start + jcount}\n")
 
     print("finished")
+print(env_istrue("LR_GET_WARS", True))

@@ -1560,7 +1560,7 @@ class URL(DBBase):
         return "<URL %r %r>" % (self.id, self.attack)
 mths = ["2020-07", "2020-08", "2020-09", "2020-10", "2020-11", "2020-12"]
 mths.extend([f"{year}-{month:02}" for year in range(2021,2030) for month in range(1,13)])
-v = [f'("{datetime.strptime(month, "%Y-%m").date()}")' for month in months]
+v = [f'("{datetime.strptime(month, "%Y-%m").date()}")' for month in mths]
 insert_str = ",".join(v)
 listen(
     LeagueSeason.__table__,
