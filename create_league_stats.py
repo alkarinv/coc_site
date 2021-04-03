@@ -16,7 +16,7 @@ from models.timer import Timer
 
 OFFLINE = False
 OUT_DIR = "stats"
-
+MIN_ATTACKS=50
 
 df_summary = None
 rates_summary = None
@@ -140,7 +140,7 @@ def do_league(warleague, season):
     out_dir = f"{OUT_DIR}/{league.season}"
     os.makedirs(out_dir, exist_ok=True)
 
-    print("league", league, warleague, season)
+    print("league", league, warleague, season, end=" ")
     t = Timer()
     df = league.to_attack_df(LeagueGroup.league_id == warleague.value)
     t.ellapsed_print(f"df {df.shape}")
@@ -159,7 +159,7 @@ def do_league(warleague, season):
     to_summary(df, f"{out_dir}/league_summary_{league.season}.csv", warleague)
     assert os.path.exists(f"{out_dir}/league_summary_{league.season}.csv")
 
-    if df.shape[0] < 50:
+    if df.shape[0] < MIN_ATTACKS:
         print("   Not enough attacks")
         return
 
@@ -199,7 +199,7 @@ def do_league(warleague, season):
     ndf.insert(0, "clan", LeaguePlayer.get_clan_names(ndf["attacker_tag"]))
     ndf.insert(0, "name", Player._get_names(ndf["attacker_tag"]))
     ndf.insert(0, 'league_id', value=warleague)
-    ndf.insert(0, 'season', value= season)
+    ndf.insert(0, 'season', value=season)
 
     ndf.to_csv(f"{out_dir}/league_stats_{league.season}_{warleague.value}.csv", index=False)
 

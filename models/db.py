@@ -139,13 +139,6 @@ def init_db():
     Base.metadata.create_all(bind=engine)
 
 
-# @click.command("init-db")
-# @with_appcontext
-# def init_db_command():
-#     """Clear existing data and create new tables."""
-#     init_db()
-#     click.echo("Initialized the database.")
-
 
 def init_app(app):
     """Register database functions with the Flask app. This is called by
@@ -155,7 +148,6 @@ def init_app(app):
 
 
 def execute(query, args={}, one=False):
-    # log.printl(query, args)
     result = session.execute(query, args)
     return (result.first() if result else None) if one else result
 

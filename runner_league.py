@@ -9,9 +9,6 @@ import time
 import traceback
 from multiprocessing import Pool, cpu_count
 
-import pandas as pd
-import tabulate
-
 from models.utils import fmt_tag
 
 if os.path.exists(".env"):
@@ -98,12 +95,13 @@ def finish(auth_token, start, suffix="", league_counts={}):
     # WarTag._get_unattached_war_tags()
 
 
-def append_clans(filename, clans):
+def append_clans(filename, clans=[]):
+    d = collections.OrderedDict({k:1 for k in clans})
     with open(filename) as inf:
         for line in inf.readlines():
             vals = line.strip().split(",")
-            clans.append(fmt_tag(vals[0]))
-
+            d[fmt_tag(vals[0])] = 1
+    return list(d.keys())
 
 def run(auth_token, start, end, suffix="", league_counts={}):
     global jcount
@@ -117,11 +115,12 @@ def run(auth_token, start, end, suffix="", league_counts={}):
 
     req.OFFLINE = OFFLINE
     db.init_db()
-    clans = ["#8ULL0ULU", "#2R9LQRLY", "#8QJY9V8P"]
-
+    # clans = ["#8ULL0ULU", "#2R9LQRLY", "#8QJY9V8P"]
+    clans = ["#8ULL0ULU"]
     if env_istrue("USE_CLAN_FILE"):
-        append_clans("clans_champs3plus_2021_02.csv")
-        append_clans("uniq_clans.txt")
+        clans = append_clans("clans_champs3plus_2021_02.csv", clans)
+        clans = append_clans("clans_2021_03.csv", clans)
+        clans = append_clans("uniq_clans.txt", clans)
     clans = clans[start:] if not end else clans[start:end]
 
     print("nclans = ", len(clans))
@@ -156,10 +155,10 @@ def should_skip(league, counts):
 
     if counts[league] > 100 and league < WarLeague.master1:
         return True
-    if counts[league] > 200 and league <= WarLeague.master1:
+    if counts[league] > 1000 and league <= WarLeague.master1:
         return True
-    if counts[league] > 1000 and league <= WarLeague.champ3:
-        return True
+    # if counts[league] > 2000 and league <= WarLeague.champ3:
+    #     return True
     return False
 
 
@@ -203,6 +202,7 @@ def update_league(clans, j, start, suffix="", league_counts={}, mc=None):
                 save_to_db=True,
                 get_wars=env_istrue("LR_GET_WARS", True),
             )
+
             print(
                 completed,
                 clan.war_league,
@@ -275,12 +275,13 @@ if __name__ == "__main__":
             raise
 
     finally:
-        with open(counts_file, "w") as f:
-            for k, v in league_counts.items():
-                print(k, v)
-                f.write(f"{k},{v}\n")
-        with open(starts_file, "w") as f:
-            f.write(f"{args.start + jcount}\n")
+        if env_istrue("USE_COUNTS", False):
+            with open(counts_file, "w") as f:
+                for k, v in league_counts.items():
+                    print(k, v)
+                    f.write(f"{k},{v}\n")
+            with open(starts_file, "w") as f:
+                f.write(f"{args.start + jcount}\n")
 
-    print("finished")
+    print("finished, ", req.req_counter.value, req.called_counter.value)
 print(env_istrue("LR_GET_WARS", True))

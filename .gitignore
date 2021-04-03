@@ -28,3 +28,4 @@ start.txt
 counts*.txt
 t.*
 hist.txt
+*.pyc

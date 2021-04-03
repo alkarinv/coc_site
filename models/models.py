@@ -57,6 +57,7 @@ def _get_last(hcls, tags):
     q = (dbsession.query(hcls).join(subq, hcls.id == subq.c.id)).all()
     return q
 
+
 class WarResult(IntEnum):
     tie = 0
     clan1_win = 1
@@ -482,7 +483,7 @@ class WarTag(DBBase):
         self.war_tag = war_tag
 
     def __str__(self):
-        return f"(WarTag {self.war_tag} {self.league_round_id})"
+        return f"(WarTag {self.war_tag}, r={self.league_round_id}, wid={self.war_id})"
 
     def __repr__(self):
         return str(self)
