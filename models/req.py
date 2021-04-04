@@ -43,19 +43,7 @@ class COCRequest:
         if OFFLINE:
             return
         if not auth_token:
-            r = requests.get("https://api.ipify.org")
-            try:
-                r.raise_for_status()
-                self.ip = str(r.text)
-            except HTTPError:
-                if _default_ip_:
-                    self.ip = _default_ip_
-                else:
-                    raise
-            if DEBUG:
-                print("My IP=", self.ip, flush=True)
-            auth_token = self._load_token(self.ip)
-
+            auth_token = self._find_token()
             self.headers = {"Accept": "application/json", "authorization": "Bearer " + auth_token}
         assert auth_token
 
@@ -63,6 +51,21 @@ class COCRequest:
     def _url_to_json_path(url):
         save_dir = f"{os.getenv('REQ_SAVE_DIR','.')}/requests"
         return os.path.join(save_dir, url.replace(API_URL, "").strip("/") + ".json")
+
+
+    def _find_token(self):
+        r = requests.get("https://api.ipify.org")
+        try:
+            r.raise_for_status()
+            self.ip = str(r.text)
+        except HTTPError:
+            if _default_ip_:
+                self.ip = _default_ip_
+            else:
+                raise
+        if DEBUG:
+            print("My IP=", self.ip, flush=True)
+        return self._load_token(self.ip)
 
     def _load_token(self, ip):
         _tokens = {k: v for k, v in _config.items("tokens")}

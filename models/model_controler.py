@@ -56,6 +56,14 @@ class DBControler:
         )
         return LeagueSeason.query.filter(f).one_or_none()
 
+    def get_unfinished_wars(self):
+        f = (
+            func.DATETIME(War.end_time) >= func.DATETIME(datetime.utcnow())
+            if db.driver.is_sqlite()
+            else War.end_time <= datetime.utcnow()
+        )
+        return War.query.filter(f).all()
+
     def table_len_player_history(self):
         return db.session.query(PlayerHistory.id).count()
 
@@ -523,6 +531,9 @@ class ModelControler:
                 # t.ellapsed_print(" committed")
 
         return wars
+
+    def get_unfinished_wars(self):
+        return self.dbcont.get_unfinished_wars()
 
     def _get_war(self, wdict, save_to_db=False):
         try:

@@ -43,6 +43,13 @@ _clans_players_association_table = Table(
     Column("player_tag", String(12), ForeignKey("player.tag")),
 )
 
+_clans_wars_association_table = Table(
+    "clans_2_wars",
+    DBBase.metadata,
+    Column("clan_tag", String(12), ForeignKey("clan.tag")),
+    Column("war_id", Integer, ForeignKey("war.id")),
+)
+
 def camel_to_snake(name):
     return _camel2snake_pattern.sub("_", name).lower()
 
@@ -1063,7 +1070,7 @@ class Clan(DBBase):
     names = relationship("ClanNameHistory", lazy="joined")
     descriptions = relationship("ClanDescriptionHistory", lazy="joined")
     members = relationship("Player", lazy="joined", secondary=_clans_players_association_table)
-    wars = relationship("Player", lazy="joined", secondary=_clans_players_association_table)
+    wars = relationship("War", lazy="joined", secondary=_clans_wars_association_table)
 
     def __init__(self, **kwargs):
         self.tag = fmt_tag(kwargs["tag"])
