@@ -620,7 +620,8 @@ class LeagueGroup(DBBase):
     def finished(self):
         if not self.has_all_war_tags():
             return False
-
+        if len(self.rounds) < 7:
+            return False
         for w in self.rounds[-1].wars:
             if w.state != WarState.war_ended:
                 return False

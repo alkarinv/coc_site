@@ -67,7 +67,7 @@ def run(
 
     from models.models import LeagueSeason, WarLeague
     if not season:
-        season = datetime.today().replace(day=1).date()
+        season = datetime.today().replace(day=1).date().strftime("%Y-%m")
 
     season = LeagueSeason.get_season(season)
     groups = season.groups[start:] if not end else season.groups[start:end]
