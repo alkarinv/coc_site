@@ -38,6 +38,17 @@ def war_timer(tag, rnd):
     queue.put((tag, rnd))
 
 
+class LastTime():
+    def __init__(self):
+        self.started_at = None
+        self.timer_end = None
+        self.timer = None
+
+    def new_end(seconds, handler):
+        if self.timer:
+            self.timer.ca
+        t = threading.Timer(seconds, handler, [DONE, None])
+
 last = None
 if __name__ == '__main__':
     process = Process(target=handle_db, args=(queue, ))
@@ -46,7 +57,9 @@ if __name__ == '__main__':
     for w in wars:
         now = datetime.utcnow()
         dif = w.end_time - now
-        if not last or dif > last:
+        if not last or last.ends_before(dif):
+            last.new_end()
+
         print(dif.seconds, w, w.parent.round)
         t = threading.Timer(dif.seconds//3600, war_timer, [w.war_tag, w.league_round_id])
         t.start()
