@@ -228,7 +228,6 @@ class ModelControler:
     def get_current_season(self):
         today = datetime.today()
         return datetime(today.year, today.month, 1).date()
-        # return datetime.strptime("2020-10", "%Y-%m").date()
 
     @lru_cache()
     def get_or_create_league(self, season=None):

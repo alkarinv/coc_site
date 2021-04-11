@@ -1,5 +1,7 @@
 import argparse
+import glob
 import math
+import operator
 import os
 import re
 import sys
@@ -16,28 +18,26 @@ ap = argparse.ArgumentParser(description="Clan stats")
 ap.add_argument("--clan-tag", default=None)
 ap.add_argument("--clan-name", default=None)
 ap.add_argument("--d-no-tag", default=None)
-ap.add_argument("--f-nattacks", default=None)
+ap.add_argument("--filter-by", default=None)
 ap.add_argument("--drop-col", default=None)
 ap.add_argument("--sort-by", default=None)
 ap.add_argument("--format", default=None)
-ap.add_argument("league_file")
+ap.add_argument("league_stat_path")
 # ap.add_argument('rest', nargs='*', type=int)
 args = ap.parse_intermixed_args()
 
 files = []
-f = os.path.abspath(args.league_file)
+f = os.path.abspath(args.league_stat_path)
 if os.path.exists(f) and os.path.isfile(f):
     files.append(f)
 elif os.path.isdir(f):
-    files = [os.path.join(f, x) for x in os.listdir(f)]
+    files = glob.glob(f"{f}/**/{PREFIX_FILTER}*.csv", recursive=True)
 else:
     raise IOError(f"File or Directory not found '{f}'")
 
 dfs = []
 for f in files:
     bn = os.path.basename(f)
-    if not bn.startswith(PREFIX_FILTER):
-        continue
     df = pd.read_csv(f)
 
     if args.clan_tag:
@@ -94,14 +94,31 @@ if args.sort_by:
     print(cols, ascending)
     df.sort_values(*cols,ascending=ascending, inplace=True)
 
+
+ops = { "=": operator.eq, ">=": operator.ge, "<=": operator.le } # etc.
+casts = { "int64": int, "object": str, "o":str}
+if args.filter_by:
+    filters = args.filter_by.split(",")
+    for f in filters:
+        col, op, criteria = re.split("(<=|>=|=)", f)
+        col, op, criteria = col.strip(), op.strip(), criteria.strip()
+        op = ops[op]
+        t = str(df.dtypes[col])
+        cast_criteria = locate( str(t))
+        cast_criteria = casts[t](criteria)
+
+        # print(col, criteria, cast_criteria)
+        # print(col, op, criteria, type(cast_criteria), type(op))
+
+        df = df[ op(df[col], cast_criteria ) ]
+
 df = df.drop(drop_cols, axis=1)
-if args.f_nattacks:
-    df = df[df["#"] >= int(args.f_nattacks)]
 if args.drop_col:
     cols = args.drop_col.split(",")
     for c in cols:
         df.drop(c.strip(), axis=1, inplace=True)
 
+# sys.exit(1)
 CHUNK_SIZE = 12
 
 table = tabulate(df.values, headers=df.columns, floatfmt=".2f")

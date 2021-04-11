@@ -31,14 +31,6 @@ jcount = 0
 t = Timer()
 
 
-def finish(auth_token, start, suffix="", league_counts={}):
-    from models.model_controler import ModelControler
-    from models.models import WarTag
-
-    mc = ModelControler()
-    # WarTag._get_unattached_war_tags()
-
-
 def run(
     auth_token,
     start=0,
@@ -132,4 +124,4 @@ if __name__ == "__main__":
         print(e)
         raise
 
-    print("finished")
+    print(f"finished, get_wars={args.get_wars}, start={args.start}, end={args.end}" )
