@@ -168,6 +168,7 @@ class WarState(IntEnum):
     preparation = 0
     in_war = 1
     war_ended = 2
+    unknown = 3
 
 
     @staticmethod

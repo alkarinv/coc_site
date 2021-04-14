@@ -3,7 +3,7 @@ import os
 import threading
 from datetime import datetime, timedelta
 from threading import Event, Thread
-
+from models.models import WarState
 from models.exceptions import WarLogPrivateException
 
 if os.path.exists(".env"):
@@ -27,15 +27,20 @@ class MyClanChecker(Thread):
 
     def run(self):
         wait_time = 1
+        old_status = WarState.unknown
         while not self.stopped.wait(wait_time):
             try:
                 war = mc.get_current_war(self.tag, True)
                 dif = war.end_time - datetime.utcnow()
                 wait_time = min(dif.seconds + 5, 300)
-                print(datetime.utcnow(), war)
+                # print(datetime.utcnow(), war, flush=True)
+                print(".", end="")
             except WarLogPrivateException as e:
-                print(datetime.utcnow(), f"WarLogPrivate {self.tag}")
+                print("#", end="")
+                # print(datetime.utcnow(), f"WarLogPrivate {self.tag}", flush=True)
                 wait_time = 180
+            except Exception as e:
+                print(f"Failed {e}")
 
 
 if __name__ == "__main__":
@@ -44,7 +49,7 @@ if __name__ == "__main__":
 
     args = ap.parse_args()
 
-    thread = MyClanChecker(stopFlag, mc)
+    thread = MyClanChecker(stopFlag, mc, args.clan_tag)
     thread.start()
 # this will stop the timer
 # stopFlag.set()
